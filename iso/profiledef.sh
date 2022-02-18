@@ -6,7 +6,6 @@ iso_label="Parch_$(date +%Y%m)"
 iso_publisher="Parch <https://parch-os.github.io/>"
 iso_application="Parch Linux"
 gpg_key="BC9DCC3C9A0B047F53065EEBFB8554F927F96E60"
-gpg_sender="komeilparseh"
 iso_version="$(date +%Y.%m.%d)"
 install_dir="arch"
 buildmodes=('iso')
