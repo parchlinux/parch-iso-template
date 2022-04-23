@@ -32,7 +32,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: pacman -Sy; pacman --noconfirm -S git archiso
       - run: cd iso; mkarchiso -v -w work/ -o out/ ./ -g ${{ secrets.GPGID }}
-      - uses: actions/upload-artifact@v2
+      uses: softprops/action-gh-release@v1
         with:
-          name: Parch Live ISO
-          path: out/*.iso
+          files: out/*.iso
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
