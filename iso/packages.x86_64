@@ -7,7 +7,7 @@ base
 base-devel
 bind
 brltty
-broadcom-wl
+broadcom-wl-dkms
 btrfs-progs
 clonezilla
 cloud-init
@@ -29,7 +29,6 @@ ethtool
 exfatprogs
 f2fs-tools
 fatresize
-falkon
 fsarchiver
 git
 gnu-netcat
@@ -80,7 +79,6 @@ nmap
 ntfs-3g
 nvme-cli
 open-iscsi
-open-vm-tools
 openconnect
 openssh
 openvpn
@@ -94,7 +92,6 @@ pv
 python
 python-psutil
 python-systemd
-qemu-guest-agent
 refind
 #reflector
 reiserfsprogs
@@ -136,6 +133,10 @@ zsh
 archlinux-keyring
 openssl-1.1
 openssl
+gvfs
+gvfs-mtp
+networkmanager
+android-file-transfer
 
 #Desktop
 
@@ -143,15 +144,16 @@ openssl
 btop
 xdg-user-dirs
 packagekit-qt5
-neofetch
-keepassxc
-octopi-git
-
+neofetch-git
+ttf-ms-fonts
+parch-firefox-config
+firefox
 
 #parchlinuxstuff
 calamares
 parchlinux-cala-config
 os-prober
 paru
+parch-emoji-ios
 parch-branding
 parch-pacman
