@@ -146,12 +146,11 @@ xdg-user-dirs
 packagekit-qt5
 neofetch-git
 ttf-ms-fonts
-parch-firefox-config
 firefox
 
 #parchlinuxstuff
 calamares
-parchlinux-cala-config
+calamares-parch
 os-prober
 paru
 parch-emoji-ios
