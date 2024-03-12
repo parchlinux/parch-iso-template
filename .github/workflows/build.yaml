@@ -12,6 +12,8 @@ env:
   GH_TOKEN: ${{ github.token }}
 jobs:
   build:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     container:
       image: archlinux:latest
@@ -19,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install Packages via Pacman
-        run: pacman -Sy; pacman --noconfirm -S git archiso python python-pygithub github-cli reflector p7zip
+        run: pacman -Sy; pacman --noconfirm -S git archiso python python-pygithub github-cli reflector p7zip  
       - name: Change Arch docker mirror
         run: reflector -c "US" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist
       - name: Build image
@@ -27,6 +29,9 @@ jobs:
       - name: Upload iso to the release
         run: |
           cd ./out
-          7z -v500m a "$(ls *.iso)".zip "$(ls *.iso)"
-          md5sum * > md5sums.txt
-          gh release upload ${{ github.event.release.tag_name }} * -R ${{ github.repository }}
+          mkdir iso_parts
+          # split -d -b 2000M "$(ls *.iso)" iso_parts/"$(ls *.iso)"_part
+          #zip -s 2000m iso_parts/"$(ls *.iso)".zip "$(ls *.iso)"
+          7z -v1000m a iso_parts/"$(ls *.iso)".zip "$(ls *.iso)"
+          md5sum iso_parts/* > iso_parts/md5sums.txt
+          gh release upload ${{ github.event.release.tag_name }} ./iso_parts/* -R ${{ github.repository }}

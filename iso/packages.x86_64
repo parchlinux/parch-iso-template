@@ -145,14 +145,11 @@ btop
 xdg-user-dirs
 packagekit-qt5
 neofetch-git
-ttf-ms-fonts
-firefox
 
-#parchlinuxstuff
-calamares
-calamares-parch
+#ParchLinux Core Packages
 os-prober
 paru
 parch-emoji-ios
+vazirmatn-fonts
 parch-branding
 parch-pacman
