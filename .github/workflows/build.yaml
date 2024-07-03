@@ -34,9 +34,9 @@ jobs:
       - name: generate ssh-key
         run:  ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: remove last iso
-        run: sshpass -p "${{ secrets.SSH_PASS }}" ssh root@${{ secrets.SSH_HOST }} bash -c "rm -rf /srv/http/test/;mkdir test"
+        run: sshpass -p "${{ secrets.SSH_PASS }}" ssh root@${{ secrets.SSH_HOST }} rm -rf /srv/http/test/Parchlinux-test-latest.iso
       - name: rename iso
-        run: mv "$(ls out/*.iso)" out/Parchlinux-test-beta.iso
+        run: mv "$(ls out/*.iso)" out/Parchlinux-test-latest.iso
       - name: upload iso to host
         run: sshpass -p "${{ secrets.SSH_PASS }}" rsync -r "out/$(ls out/*.iso)" root@${{ secrets.SSH_HOST }}:/srv/http/test
       - name: Upload iso to the release
