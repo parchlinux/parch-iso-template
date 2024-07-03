@@ -27,7 +27,7 @@ jobs:
         run: | 
           mkdir out
           cd out
-          wget https://mirror.parchlinux.com/beta/ParchLinux.gnome.beta.iso
+          touch ParchLinux.gnome.beta.iso
           # mkarchiso -v iso/
       - name: create .ssh folder
         run: mkdir ~/.ssh
