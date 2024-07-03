@@ -37,7 +37,7 @@ jobs:
       - name: rename iso
         run: mv "$(ls out/*.iso)" out/Parchlinux-test-latest.iso
       - name: upload iso to host
-        run: sshpass -p "${{ secrets.SSH_PASS }}" rsync -r "out/$(ls out/*.iso)" root@$HOST:/srv/http/test
+        run: sshpass -p "${{ secrets.SSH_PASS }}" rsync -rav -e ssh "out/$(ls out/*.iso)" root@$HOST:/srv/http/test
       - name: Upload iso to the release
         run: |
           cd ./out
