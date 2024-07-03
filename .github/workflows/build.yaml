@@ -39,15 +39,15 @@ jobs:
       - name: upload iso to host
         # run: sshpass -p "${{ secrets.SSH_PASS }}" rsync -rav -e ssh "out/$(ls out/*.iso)" root@$HOST:/srv/http/test/"
         uses: burnett01/rsync-deployments@7.0.1
-          with:
-            switches: -avzr --delete
-            legacy_allow_rsa_hostkeys: "true"
-            path: out/Parchlinux-test-latest.iso
-            remote_path: /srv/http/test
-            remote_host: $HOST
-            remote_port: 22
-            remote_user: root
-            remote_key: ${{ secrets.SSH_PASS }}
+        with:
+          switches: -avzr --delete
+          legacy_allow_rsa_hostkeys: "true"
+          path: out/Parchlinux-test-latest.iso
+          remote_path: /srv/http/test
+          remote_host: $HOST
+          remote_port: 22
+          remote_user: root
+          remote_key: ${{ secrets.SSH_PASS }}
 
       - name: Upload iso to the release
         run: |
