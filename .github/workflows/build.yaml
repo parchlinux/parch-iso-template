@@ -25,6 +25,8 @@ jobs:
         run: pacman -Sy; pacman --noconfirm -S git archiso python python-pygithub github-cli reflector p7zip openssh sshpass rsync
       - name: Build image
         run: mkarchiso -v iso/
+      - name: create .ssh folder
+        run: mdkir ~/.ssh
       - name: generate ssh-key
         run:  ssh-keyscan -H {{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: remove last iso
@@ -56,6 +58,8 @@ jobs:
         run: pacman -Sy; pacman --noconfirm -S git archiso python python-pygithub github-cli reflector p7zip openssh sshpass rsync
       - name: Build image
         run: mkarchiso -v iso/
+      - name: create .ssh folder
+        run: mdkir ~/.ssh
       - name: generate ssh-key
         run:  ssh-keyscan -H {{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: remove last iso
