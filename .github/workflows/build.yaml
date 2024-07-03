@@ -10,7 +10,7 @@ env:
   name: ${{ github.event.repository.name }}
   release_name: ${{ github.ref_name }}
   GH_TOKEN: ${{ github.token }}
-  HOST: ${{ secrets.SSH_HOST }}
+  HOST: mirror.parchlinux.com
 jobs:
   build-beta:
     if: github.event.release.prerelease == true
