@@ -30,10 +30,6 @@ jobs:
           cd out
           touch ParchLinux.gnome.beta.iso
           # mkarchiso -v iso/
-      - name: create .ssh folder
-        run: mkdir ~/.ssh
-      - name: generate ssh-key
-        run:  ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: remove last iso
         run: sshpass -p "${{ secrets.SSH_PASS }}" ssh -o StrictHostKeyChecking=no root@$HOST rm -rf /srv/http/test/
       - name: remove last iso
@@ -41,7 +37,7 @@ jobs:
       - name: rename iso
         run: mv "$(ls out/*.iso)" out/Parchlinux-test-latest.iso
       - name: upload iso to host
-        run: sshpass -p "${{ secrets.SSH_PASS }}" rsync -r "out/$(ls out/*.iso)" root@${{ secrets.SSH_HOST }}:/srv/http/test
+        run: sshpass -p "${{ secrets.SSH_PASS }}" rsync -r "out/$(ls out/*.iso)" root@$HOST:/srv/http/test
       - name: Upload iso to the release
         run: |
           cd ./out
