@@ -1,60 +1,66 @@
-#!/usr/bin/bash
-main() {
-    set -e
-    local Black DarkGray Red LightRed Green LightGreen Brown Yellow Blue LightBlue Purple Light Purple Cyan LightCyan LightGray White reset
-    ## Save colors
-    Black="\e[0;30m"
-    DarkGray="\e[1;30m"
-    Red="\e[0;31m"
-    LightRed="\e[1;31m"
-    Green="\e[0;32m"
-    LightGreen="\e[1;32m"
-    Brown="\e[0;33m"
-    Yellow="\e[1;33m"
-    Blue="\e[0;34m"
-    LightBlue="\e[1;34m"
-    Purple="\e[0;35m"
-    Light=Purple="\e[1;35m"
-    Cyan="\e[0;36m"
-    LightCyan="\e[1;36m"
-    LightGray="\e[0;37m"
-    White="\e[1;37m"
-    reset="\e[0m"
-    local reponame
-    reponame=${PWD##*/}
-    
-    echo -e "$Green### Start install packages for build $reponame ###$reset"
-    echo -e "$Brown### Checking your OS ###$reset"
-    if type pacman >/dev/null 2>&1;then
-        if [ "$(id -u)" != "0" ]; then
-            echo -e "$Red### You are not in root$reset"
-            exit 1
-        else
-            install
-            echo -e "$Blue### Install complete ###$reset"
-            echo -e "$Green### Start build $reponame with archiso ###$reset"
-            build
-            makezip
-        fi
-    else
-        echo -e "$Red###OS can't supported###$reset"
-        exit 1
-    fi
+#!/usr/bin/env bash
 
+# ANSI Color Codes ==============================
+RED="\033[0;91m"
+GREEN="\033[0;92m"
+YELLOW="\033[0;93m"
+BLUE="\033[0;94m"
+CYAN="\033[0;96m"
+CLEAR="\033[0;0m"
+# Functions =====================================
+
+log() {
+    local type="$1"
+    shift
+    case "$type" in
+        info)    echo -e "${CYAN} [!] $* ${CLEAR}" ;;
+        warn)    echo -e "${YELLOW} [!] $* ${CLEAR}" ;;
+        error)   echo -e "${RED} [X] $* ${CLEAR}" >&2 ;;
+        success) echo -e "${GREEN} [>] $* ${CLEAR}" ;;
+    esac
 }
-install() {
-    set -e
-    pacman -Sy; pacman --noconfirm -S --needed git archiso github-cli p7zip
+
+# Install required packages
+install_packages() {
+    pacman -Sy
+    pacman --noconfirm -S --needed git archiso github-cli p7zip
 }
-build() {
-    set -e
+
+# Build the Arch ISO
+build_iso() {
     mkarchiso -v iso/
 }
-makezip() {
+
+# Create a zip archive of the ISO
+create_zip() {
     cd out
     7z -v500m a "$(ls *.iso)".zip "$(ls *.iso)"
     md5sum * > md5sums.txt
 }
 
 
+# Main function
+main() {
+    local reponame=${PWD##*/}
+
+    log info "Start installing packages for building $reponame ..."
+    log info "Checking your OS ..."
+
+    if command -v pacman &>/dev/null; then
+            install_packages
+            log success "Package Installtion completed"
+            log success "Start building $reponame with archiso ..."
+            build_iso
+            create_zip
+            log success "Building $reponame completed successfully."
+    else
+        log error "This OS is not Supported"
+        exit 1
+    fi
+}
+
+# Ensure the script is run as root ==============
+[[ $EUID -ne 0 ]] && { log error "This script must be run as root."; exit 1; }
+
+# Run the main function =========================
 main
